@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os/exec"
 	"time"
@@ -21,7 +20,7 @@ func main() {
 	var color string
 	for range time.NewTicker(time.Second).C {
 		color = robotgo.GetPixelColor(877, 852)
-		fmt.Println(color)
+		log.Println(color)
 		if color == msgColor {
 			if err := do(); err != nil {
 				log.Println("do error:", err.Error())
@@ -38,20 +37,20 @@ func do() error {
 	if err != nil {
 		return err
 	}
-	fmt.Println(string(b))
-	fmt.Println("do end ...")
+	log.Println(string(b))
+	log.Println("do end ...")
 	return nil
 }
 
 func color() {
 	color := robotgo.GetPixelColor(877, 852) //获取坐标100, 200的颜色
-	fmt.Println("color----", color, "-----------------")
+	log.Println("color----", color, "-----------------")
 	// ed5c4c
 }
 func mouse() {
 	for range time.NewTicker(time.Second).C {
 		x, y := robotgo.GetMousePos() //获取鼠标坐标位置
-		fmt.Println("pos:", x, y)
+		log.Println("pos:", x, y)
 		// 877 852
 	}
 }
@@ -89,9 +88,9 @@ func test() {
 	robotgo.MoveSmooth(100, 200)             //平滑移动鼠标到100, 200
 	robotgo.MoveSmooth(100, 200, 1.0, 100.0) //设置平滑移动速度
 	x, y := robotgo.GetMousePos()            //获取鼠标坐标位置
-	fmt.Println("pos:", x, y)
+	log.Println("pos:", x, y)
 	if x == 456 && y == 586 {
-		fmt.Println("mouse...", "586")
+		log.Println("mouse...", "586")
 	}
 
 	robotgo.Toggle("up")
@@ -99,77 +98,77 @@ func test() {
 	robotgo.Move(100, 200)
 
 	for i := 0; i < 1080; i += 1000 {
-		fmt.Println(i)
+		log.Println(i)
 		robotgo.Move(800, i)
 	}
 	//屏幕控制
 	// robotgo.CaptureScreen()
 	bit_map := robotgo.CaptureScreen()
-	// fmt.Println("CaptureScreen...", bit_map)
+	// log.Println("CaptureScreen...", bit_map)
 	// robotgo.FreeBitmap(bit_map)
 	// gbit_map := robotgo.BCaptureScreen() //获取屏幕位图
-	// fmt.Println("Capture_Screen...", gbit_map.Width)
+	// log.Println("Capture_Screen...", gbit_map.Width)
 
 	sx, sy := robotgo.GetScreenSize() //获取屏幕width和height
-	fmt.Println("...", sx, sy)
+	log.Println("...", sx, sy)
 
 	color := robotgo.GetPixelColor(100, 200) //获取坐标100, 200的颜色
-	fmt.Println("color----", color, "-----------------")
+	log.Println("color----", color, "-----------------")
 
 	color2 := robotgo.GetPixelColor(10, 20) //获取坐标10, 20的颜色
-	fmt.Println("color---", color2)
+	log.Println("color---", color2)
 
 	// Bitmap
 	abit_map := robotgo.CaptureScreen() //获取全屏位图
-	fmt.Println("a...", abit_map)
+	log.Println("a...", abit_map)
 
 	// bit_map := robotgo.CaptureScreen(100, 200, 30, 40)
 	//获取100, 200, 30, 40的位图
-	// fmt.Println("CaptureScreen...", bit_map)
-	// fmt.Println("...", bit_map.Width, bit_map.BytesPerPixel)
+	// log.Println("CaptureScreen...", bit_map)
+	// log.Println("...", bit_map.Width, bit_map.BytesPerPixel)
 
 	fx, fy := robotgo.FindBitmap(bit_map) //查找位图
-	fmt.Println("FindBitmap------", fx, fy)
+	log.Println("FindBitmap------", fx, fy)
 
 	bit_pos := robotgo.GetPortion(bit_map, 10, 10, 11, 10) //截取位图
-	fmt.Println(bit_pos)
+	log.Println(bit_pos)
 
 	bit_str := robotgo.TostringBitmap(bit_map) //Tostring位图
-	fmt.Println("bit_str...", bit_str)
+	log.Println("bit_str...", bit_str)
 
 	// sbit_map := robotgo.BitmapFromstring(bit_str, 2)
-	// fmt.Println("...", sbit_map)
+	// log.Println("...", sbit_map)
 
 	robotgo.SaveBitmap(bit_map, "test.png") //保存位图为图片
 	robotgo.SaveBitmap(bit_map, "test31.tif", 1)
 	robotgo.Convert("test.png", "test.tif") //转换位图图片格式
 
 	open_bit := robotgo.OpenBitmap("test.tif") //打开图片位图
-	fmt.Println("open...", open_bit)
+	log.Println("open...", open_bit)
 
 	//全局监听事件
-	fmt.Println("---请按v键---")
+	log.Println("---请按v键---")
 	eve := robotgo.AddEvent("v")
 
 	if eve {
-		fmt.Println("---你按下v键---", "v")
+		log.Println("---你按下v键---", "v")
 	}
 
-	fmt.Println("---请按k键---")
+	log.Println("---请按k键---")
 	keve := robotgo.AddEvent("k")
 	if keve {
-		fmt.Println("---你按下k键---", "k")
+		log.Println("---你按下k键---", "k")
 	}
 
-	fmt.Println("---请按鼠标左键---")
+	log.Println("---请按鼠标左键---")
 	mleft := robotgo.AddEvent("mleft")
 	if mleft {
-		fmt.Println("---你按下左键---", "mleft")
+		log.Println("---你按下左键---", "mleft")
 	}
 
 	// mright := robotgo.AddEvent("mright")
 	// if mright == 0 {
-	//  fmt.Println("---你按下右键---", "mright")
+	//  log.Println("---你按下右键---", "mright")
 	// }
 
 	// robotgo.LStop()
@@ -177,15 +176,15 @@ func test() {
 	//窗口
 	abool := robotgo.ShowAlert("hello", "robotgo") //弹出窗口
 	if abool {
-		fmt.Println("ok@@@", "确认")
+		log.Println("ok@@@", "确认")
 	}
 	robotgo.ShowAlert("hello", "robotgo", "确认", "取消")
 	// robotgo.GetPID()
 	mdata := robotgo.GetActive() //获取当前窗口
 	hwnd := robotgo.GetHandle()  //获取当前窗口hwnd
-	fmt.Println("hwnd---", hwnd)
+	log.Println("hwnd---", hwnd)
 	title := robotgo.GetTitle() //获取当前窗口标题
-	fmt.Println("title-----", title)
+	log.Println("title-----", title)
 	robotgo.CloseWindow()    //关闭当前窗口
 	robotgo.SetActive(mdata) //SetActive窗口
 }
